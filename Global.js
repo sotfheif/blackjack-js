@@ -1,0 +1,8 @@
+class Global{
+    constructor(){
+
+    }
+    build() {
+        
+    }
+}
