@@ -1,4 +1,4 @@
-class Global{
+export class Global{
     constructor(){
 
     }

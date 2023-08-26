@@ -1,3 +1,3 @@
-class Drawer{
+export class Drawer{
     
 }

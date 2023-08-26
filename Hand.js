@@ -1,4 +1,4 @@
-class Hand {
+export class Hand {
     constructor(cards){
         this.cards = cards
     }
