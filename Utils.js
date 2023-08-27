@@ -13,3 +13,6 @@ function shuffled(arr) { //tested a bit
     }
 	return res
 }
+
+export const getMethods = (obj) => Object.getOwnPropertyNames(obj)
+.filter(item => typeof obj[item] === 'function')
