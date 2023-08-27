@@ -21,4 +21,6 @@ export const Ranks = Object.freeze({
     king: 13
   })
 
+  export const MAX_SCORE = 21
+
   
