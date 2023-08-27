@@ -29,6 +29,10 @@ export class Hand {
         }
         return score
     }
+    
+    getSize() {
+        return this.cards.length
+    }
 
     addCard(card){
         this.cards.add(card)
