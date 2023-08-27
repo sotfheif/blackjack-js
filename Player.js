@@ -2,14 +2,13 @@ import { Hand } from "./Hand.js"
 import { Deck } from "./Deck.js"
 
 export class Player {
-    isDealer = false
-    constructor(isDealer) {
+    constructor(isDealer, hand) {
         this.isDealer = isDealer
+        this.hand = hand
     }
-    static build(isDealer){
-        return new Player(isDealer)
+    static build(isDealer = false) {
+        return new this(isDealer, Hand.build([]))
     }
-    hand
     drawCard(deck) {
         this.hand.add(deck.shift())
     }
