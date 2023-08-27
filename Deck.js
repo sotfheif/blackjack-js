@@ -15,7 +15,7 @@ export class Deck{
                 cards.push(Card.build(suit, rank))
             }
         }
-        return new Deck(cards)
+        return new Deck(shuffled(cards))
     }
     test(){
         console.log("test")
