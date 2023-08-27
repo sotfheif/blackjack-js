@@ -5,4 +5,5 @@ export class Global{
     build() {
         
     }
+    money = 1000
 }
