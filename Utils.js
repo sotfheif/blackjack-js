@@ -1,6 +1,6 @@
-function shuffled(arr) { //tested a bit
+export function shuffled(arr) { //tested a bit
     let indexArray = [...Array(arr.length).keys()]
-    res = []
+    const res = []
     while (indexArray.length > 0) {
         const ind = Math.floor(Math.random() * indexArray.length)
         res.push(arr[indexArray[ind]])

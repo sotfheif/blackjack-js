@@ -12,12 +12,12 @@ export class Game{
         return new this(rules)
     }
     start(){
-        player = Player.build(false)
-        dealer = Player.build(true)
-        deck = Deck.build()
+        this.player = Player.build(false)
+        this.dealer = Player.build(true)
+        this.deck = Deck.build()
         this.player.drawFirstCards(this.deck)
         this.dealer.drawFirstCards(this.deck)
-        this.checkBlackjack()
+        //this.checkBlackjack()
     }
     checkBlackjack(){
         const playerBlackjack = this.player.hasBlackjack()

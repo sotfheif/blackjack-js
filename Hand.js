@@ -35,6 +35,6 @@ export class Hand {
     }
 
     addCard(card){
-        this.cards.add(card)
+        this.cards.push(card)
     }
 }

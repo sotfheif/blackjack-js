@@ -10,7 +10,7 @@ export class Player {
         return new this(isDealer, Hand.build([]))
     }
     drawCard(deck) {
-        this.hand.add(deck.shift())
+        this.hand.addCard(deck.giveCard())
     }
     drawFirstCards(deck) {
         this.drawCard(deck)

@@ -1,5 +1,6 @@
 import {Card} from "./Card.js"
 import {Suits, Ranks} from "./Constants.js"
+import {shuffled} from "./Utils.js"
 
 export class Deck{
     constructor(cards){
@@ -14,5 +15,8 @@ export class Deck{
             }
         }
         return new this(shuffled(cards))
+    }
+    giveCard(){
+        return this.cards.shift()
     }
 }
