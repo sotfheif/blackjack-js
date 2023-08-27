@@ -1,9 +1,8 @@
 export class Global{
-    constructor(){
-
+    constructor(money){
+        this.money = money
     }
-    build() {
-        
+    build(money = 1000) {
+        return new this(money)
     }
-    money = 1000
 }

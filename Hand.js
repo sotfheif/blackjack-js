@@ -6,7 +6,7 @@ export class Hand {
     }
     cards
     static build(cards){
-        return new Hand(cards)
+        return new this(cards)
     }
 
     /* mb use worth property and calcWorth() method which updates

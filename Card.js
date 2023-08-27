@@ -5,7 +5,7 @@ export class Card {
     }
     
     static build(suit, rank){
-        return new Card(suit, rank)
+        return new this(suit, rank)
     }
 
 }

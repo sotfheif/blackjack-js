@@ -13,6 +13,6 @@ export class Deck{
                 cards.push(Card.build(suit, rank))
             }
         }
-        return new Deck(shuffled(cards))
+        return new this(shuffled(cards))
     }
 }
