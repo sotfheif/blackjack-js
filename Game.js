@@ -1,5 +1,6 @@
 import {Player} from "./Player.js"
 import {Deck} from "./Deck.js"
+import {BlackjackTypes} from "./Constants.js"
 
 export class Game{
     constructor(rules) {
@@ -22,14 +23,29 @@ export class Game{
     checkBlackjack(){
         const playerBlackjack = this.player.hasBlackjack()
         const dealerBlackjack = this.dealer.hasBlackjack()
+        let blackjack = BlackjackTypes.nobody
         if (playerBlackjack && dealerBlackjack) {
+            blackjack = BlackjackTypes.both
             console.log("Draw, both players have blackjack.")
         } else if (playerBlackjack) {
+            blackjack = BlackjackTypes.player
             console.log("Blackjack, you won!")
         } else if (dealerBlackjack) {
+            blackjack = BlackjackTypes.dealer
             console.log("Dealer blackjack, you lost.")
         } else {
-
         }
+        return blackjack
+    }
+    drawPlayerCard(){
+        this.player.drawCard(deck)
+    }
+
+    drawDealerCard(){
+        this.dealer.drawCard(deck)
+    }
+
+    gameOver(){
+
     }
 }
