@@ -89,9 +89,43 @@ function playerWin(global, bet, isBlackjack) {
   global.money = global.money + prize
 }
 
+document.getElementById("test-btn").addEventListener("click", function(){
+const deckimg = document.getElementById("deck-img")
+let keyFrames =
+[
+    { transform: 'translateX(0px)' }, 
+    { transform: 'translateX(100px)' }
+]
+deckimg.animate(keyFrames, {
+    duration: 800,
+    fill: 'forwards',
+    easing: "ease-in-out",
+  })
+})
+
+
 function drawGameUi(){
     const dealerCardsDiv = document.getElementById("dealer-cards")
     let dealerCard1 = document.createElement("img") 
     dealerCard1.src = "./res/card_images/svg/back.svg"
     dealerCardsDiv.appendChild(dealerCard1)
+    /*
+        $("#main-char").animate( {
+          top: $(this).offset().top -27
+        }, 1000, function() {
+        });
+    */
+
+/*
+        var rabbitDownKeyframes = new KeyframeEffect(
+            whiteRabbit, 
+            [
+              { transform: 'translateY(0%)' }, 
+              { transform: 'translateY(100%)' }
+            ], 
+            { duration: 3000, fill: 'forwards' }
+          );
+        
+        var rabbitDownAnimation = new Animation(rabbitDownKeyframes, document.timeline);
+        */
 }
