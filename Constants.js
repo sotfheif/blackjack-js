@@ -21,6 +21,21 @@ export const Ranks = Object.freeze({
     king: 13
   })
 
+  export const States = Object.freeze({
+    betting: 0,
+    gameStarted: 1,
+    dealerMove: 2,
+  })
+
+  export const BlackjackTypes = Object.freeze({
+    nobody: 0,
+    player: 1,
+    dealer: 2,
+    both: 3
+  })
+
+
+
   export const MAX_SCORE = 21
 
   
