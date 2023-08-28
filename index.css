@@ -2,3 +2,19 @@
     width: 100px;
     /*height: 500px;*/
 }
+
+body{
+    background-color: transparent;
+}
+
+html {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;
+    background-image: url("res/table.png");
+    /*background-size: cover;*/
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+
+}
