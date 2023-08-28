@@ -18,3 +18,13 @@ html {
     background-size: 100% 100%;
 
 }
+
+#play-btns {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#bet-input{
+    width: 70px;
+}
