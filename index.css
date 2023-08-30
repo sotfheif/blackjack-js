@@ -1,6 +1,7 @@
 .card {
     width: 100px;
     /*height: 500px;*/
+    position:absolute;
 }
 
 body{
@@ -20,9 +21,7 @@ html {
 }
 
 #play-btns {
-
     display: flex;
-    flex-wrap: wrap;
 }
 
 #bet-input{
