@@ -1,5 +1,5 @@
 import {Card} from "./Card.js"
-import {Suits, Ranks, suitFileName, rankFileName} from "./Constants.js"
+import {Suits, Ranks, suitFileName, rankFileName, CARD_DRAW_DURATION_MS} from "./Constants.js"
 
 export class Controller {
     constructor(){
