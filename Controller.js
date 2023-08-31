@@ -1,5 +1,5 @@
 import {Card} from "./Card.js"
-import {Suits, Ranks, suitFileName, rankFileName, BlackjackTypes} from "./Constants.js"
+import {Suits, Ranks, suitFileName, rankFileName, CARD_DRAW_DURATION_MS, BlackjackTypes} from "./Constants.js"
 
 export class Controller {
     constructor(){
@@ -49,7 +49,7 @@ export class Controller {
         ]
 
         let anim = source.animate(keyFrames, {
-            duration: 1200,
+            duration: CARD_DRAW_DURATION_MS,
             fill: fill,
             easing: "ease-in-out",
           }).finished.then(this.setCardImgSrc.bind(this, source, card))

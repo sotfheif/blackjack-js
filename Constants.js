@@ -55,5 +55,5 @@ export const Ranks = Object.freeze({
   ])
   
   export const MAX_SCORE = 21
-
+export const CARD_DRAW_DURATION_MS = 1200
   
