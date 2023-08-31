@@ -32,7 +32,7 @@ export class Controller {
         ]
 
         let anim = source.animate(keyFrames, {
-            duration: 1200,
+            duration: CARD_DRAW_DURATION_MS,
             fill: fill,
             easing: "ease-in-out",
           }).finished.then(this.setCardImgSrc.bind(this, source, card))
