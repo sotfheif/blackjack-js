@@ -1,9 +1,15 @@
 .card {
-    width: 100px;
-    /*height: 500px;*/
-    position:absolute;
+    width: 100px; /*if width = 100px then height = 142px*/
+   
 }
-
+html, body {
+    margin: 0;
+    padding: 0;
+    position:relative;
+}
+.game {
+    visibility: hidden;
+}
 body{
     background-color: transparent;
 }
@@ -14,7 +20,9 @@ html {
     /*background-size: cover;*/
     font-weight: bold;
     color: white;
+    /*
     text-align: center;
+    */
     background-attachment: fixed;
     background-size: 100% 100%;
 
@@ -26,4 +34,90 @@ html {
 
 #bet-input{
     width: 70px;
+}
+
+#bet-play-gameover {
+    
+    margin: 0;
+    
+    width:100%;
+    display: flex;
+    text-align: center;
+    align-items:center;
+    justify-content: center;
+    /*
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+    */
+    
+}
+
+#bet-play-gameover-ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#dealer-zone, #player-zone {
+    margin-left: 100px;
+    height: 142px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+#player-zone{
+    margin-top: -40px
+}
+
+#dealer-worth-text, #player-worth-text {
+    display: inline;
+    margin: 0px;
+}
+
+#dealer-cards, #player-cards {
+    display: inline;
+}
+
+
+#balance-bet-deck{
+    margin-top:-80px;
+    margin-left: 10px;
+    height: 142px;
+    gap: 600px;
+    display: flex;
+    min-width: 900px;
+}
+
+
+#balance-bet{
+    margin-top: 50px;
+    /*
+    display: inline-block;
+    */
+}
+/*
+#deck {
+    display: inline-block;
+    margin-left: 600px;
+}
+*/
+/*
+#balance-text{
+
+}
+*/
+
+
+#play-btns {
+    margin-left:600px;
+}
+
+#test-btn {
+    visibility: hidden;
 }

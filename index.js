@@ -15,7 +15,7 @@ setTimeout(function() {
 let state
 const global = Global.build()
 const controller = new Controller()
-let betText = document.getElementById("bet-text?")
+let betInput = document.getElementById("bet-input")
 
 
 let game = Game.build(rules)
@@ -26,35 +26,34 @@ playBtn.addEventListener("click", startGame)
 let hitBtn = document.getElementById("hit-btn")
 hitBtn.addEventListener("click", drawPlayerCard)
 
+let okBtn = document.getElementById("gameover-ok-btn")
+
 let standBtn = document.getElementById("stand-btn")
 standBtn.addEventListener("click", dealerMove)
 
 
 
 function startGame() {
-  let bet = betText //assert or make sure it's number
-  global.money = global.money - bet
+  let betText = betInput.value //assert or make sure it's number
+  let bet = parseInt(betText) 
+  console.log('betText=' + betText + ' bet='+bet)
+  global.placeBet(bet) 
   game.start()
-  isBlackJack(game)
   console.log("game started")
   console.log(game.dealer.hand.getSize() + " " +
     game.dealer.hand.getWorth() + " " + game.player.hand.getSize() +
     " " + game.player.hand.getWorth())
-    drawGameUi()
+    let balance = global.money
+    const blackjackState = game.checkBlackjack()
+    let newBalance = global.handleBlackJack(blackjackState, bet)
+    controller.startGame(balance, bet, blackjackState, newBalance)
+    
 }
 
-function isBlackJack() {
-  const blackjack = game.checkBlackjack()
-  switch(blackjack) {
-    case 0:
-      break
-    case 1:
-      break
-    case 2:
-      break
-    default:
-  }
+/*
+function handleBlackJack(balance) {
 }
+*/
 
 function drawPlayerCard(){
   game.drawPlayerCard()
@@ -84,16 +83,13 @@ function gameOver() {// mb place this inside listener
   //clearGameUi
 }
 
-function playerWin(global, bet, isBlackjack) {
-  let prize = bet
-  if(isBlackJack) {
-    prize = Math.round(prize * 1.5)
-  }
-  global.money = global.money + prize
+function playerWin(global, bet) {
+  global.win(bet)
 }
 
 document.getElementById("test-btn").addEventListener("click", test)
 function test() {
+  console.log(document.getElementById("deck-img").height)
   controller.drawPlayerCard(Card.build(0,4), 0)
   controller.drawPlayerCard(Card.build(2,10), 1)
 }

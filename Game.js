@@ -9,10 +9,13 @@ export class Game{
     player
     dealer
     deck
+    bet
+    
     static build(rules) {
         return new this(rules)
     }
-    start(){
+    start(bet){
+        this.bet = bet
         this.player = Player.build(false)
         this.dealer = Player.build(true)
         this.deck = Deck.build()

@@ -1,5 +1,5 @@
 import {Card} from "./Card.js"
-import {Suits, Ranks, suitFileName, rankFileName} from "./Constants.js"
+import {Suits, Ranks, suitFileName, rankFileName, BlackjackTypes} from "./Constants.js"
 
 export class Controller {
     constructor(){
@@ -10,8 +10,25 @@ export class Controller {
     dealerCardPlacePx = {left: 100, top: 20}
     playerCardPlacePx = {left: 100, top: 200}
     deckPlacePx = {left:800, top:110}
-    deckImgId = "deck-card-back"
-    topDeckImgId = "top-deck-card-back"
+    deckImgId = "deck-img"
+    balanceTextId = "balance-text"
+    gameoverMessId = "gameover-message"
+
+    getDealerCardPlacePx() {
+      let left = document.getElementById("dealer-worth").style.right
+      let top = document.getElementById("dealer-zone").style.top
+      return {left: left, top: top}
+    }
+    getPlayerCardPlacePx() {
+      let left = document.getElementById("player-worth").style.right
+      let top = document.getElementById("player-zone").style.top
+      return {left: left, top: top}
+    }
+    getDeckPlacePx(){
+      let left = document.getElementById("deck-img").style.left
+      let top = document.getElementById("deck-img").style.top
+      return {left: left, top: top}
+    }
 
     build(){
         return new this()
@@ -119,34 +136,72 @@ export class Controller {
   }
 
 
-
-  setBalance(){
-
-  }
-
   showBettingScreen(){
-    clearGameUi()
-    showBetDialog()
+    this.clearGameUi()
+    this.showBetDialog()
 
   }
 
-  startGame(){
-    const dealerCardsDiv = document.getElementById("dealer-cards")
+  showBet(bet) {
+    const betEl = document.getElementById("bet-text")
+    betEl.textContent = "Bet: " + bet
+    betEl.style.visibility="visible"
+  }
 
-    hideBetDialog()
-    showBet()
-    this.addCardBackOnDeck(this.deckImgId) //deck image
+  updateShowUiText(elemId, text){
+    const elem = document.getElementById(elemId)
+    elem.textContent = text
+    elem.style.visibility = "visible"
+  }
+
+  updateBalance(balance){
+     const text = "Balance: "+ balance
+     this.updateShowUiText(this.balanceTextId,text) 
+    }
+
+  startGame(balance, bet, blackjackState, newBalance){
+    const dealerCardsDiv = document.getElementById("dealer-cards")
+  
+    this.hideBetDialog()
+    this.updateBalance(balance)
+    this.showBet(bet)
+    document.getElementById(this.deckImgId).style.visibility = "visible" //deck image
     //this.addCardBackOnDeck(this.topDeckImgId)//img to move around
-    givePlayerStartHand()
-    giveDealerStartHand()
-    showHandWorth()
+    this.givePlayerStartHand()
+    this.giveDealerStartHand()
+    this.showHandWorth()
+    //in the end, after all animations, call handleBlackJack(blackjackState, newBalance)
 
     //dealerCardsDiv.appendChild(dealerCard1)
   }
+
+  hideBetDialog(){
+    document.getElementById("bet-play-gameover").style.visibility = "hidden"
+  }
+
   givePlayerStartHand(){
     
   }
   giveDealerStartHand(){
 
+  }
+
+  handleBlackJack(blackjackState, newBalance){
+    if (blackjackState === BlackjackTypes.nobody) {return}
+    let mess 
+    switch(blackjackState){
+      case BlackjackTypes.player:
+        mess = "Blackjack! You win"
+        break
+      case BlackjackTypes.dealer:
+        mess = "Dealer blackjack! You lose"
+        break
+      case BlackjackTypes.both:
+        mess = "Double blackjack! Draw"
+        break
+      default:
+    }
+    this.updateShowUiText(this.gameoverMessId, mess)
+    this.updateBalance(newBalance)
   }
 }

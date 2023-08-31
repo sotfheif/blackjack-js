@@ -1,40 +1,66 @@
 <html>
-    <head>
-        <script type="module" src ="index.js">
-        </script>
-        <link rel="stylesheet" href="index.css">
-    </head>
-    <body>
-        <div id ="play-btns">
-            <button id ="hit-btn">HIT</button>
-            <button id = "stand-btn">STAND</button>
-        </div>
-        <button id = "gameover-ok-btn">OK</button>
 
-        <div id = "bet-and-play">
-            <div id ="place-bet">
-                <label id = "bet-input-label">Enter bet:</label>
-                <input id = "bet-input" type = "text">
-            </div>
-            <button id ="play-btn">PLAY</button>
-        </div>
+<head>
+    <script type="module" src="index.js">
+    </script>
+    <link rel="stylesheet" href="index.css">
+</head>
 
-        <div id = "money-text">Balance: 1000</div>
-        <div id = "bet-text">Bet: 100</div>
-        
-        <div id = "player-zone">        
-            <div id = "player-worth-text">17</div>
-            <div id = "player-cards"></div>
+<body>
+    <div id="dealer-zone" class ="game">
+        <div id="dealer-worth-text">17</div>
+        <div id="dealer-cards">
+            <!--
+            <img id="dealer-cards-img" class="card" src="./res/card_images/svg/back.svg">
+            -->
         </div>
-        <div id = "dealer-zone">        
-            <div id = "dealer-worth-text">17</div>
-            <div id = "dealer-cards"></div>
+    </div>
+    <div id="bet-play-gameover">
+        <ul id="bet-play-gameover-ul">
+            <li id = "gameover-message-li" class = "gameover">
+                <div id = "gameover-message">
+                    blackjack, you won
+                </div>
+            </li>
+            <li id = "place-bet-li" class = "gameover">
+                <div id="place-bet">
+                    <label id="bet-input-label">Enter bet:</label>
+                    <input id="bet-input" type="text">
+                </div>
+            </li>
+            <li id = play-btn-div-li class = "gameover">
+                <div id="play-btn-div">
+                    <button id="play-btn">PLAY</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id = "balance-bet-deck">
+    <div id="balance-bet">
+        <div id="balance-text" class="alwaysVisible">Balance: 1000</div>
+        <div id="bet-text"  class ="game">Bet: 100</div>
+    </div>
+    <div id="deck" class ="game">
+        <img id="deck-img" class="card" src="./res/card_images/svg/back.svg">
+    </div>
+    </div>
+    <div id="player-zone" class ="game">
+        <div id="player-worth-text">17</div>
+        <div id="player-cards">
+            <!--
+            <img id="deck-img" class="card" src="./res/card_images/svg/back.svg">
+            -->
         </div>
+    </div>
 
-        <div id = "deck"><img id = "deck-img" class = "card" src = "./res/card_images/svg/back.svg">
-        </div>
-        <button id = "test-btn">test</button>
+    <div id="play-btns" class ="game">
+        <button id="hit-btn">HIT</button>
+        <button id="stand-btn">STAND</button>
+    </div>
+
+    <button id="test-btn">test</button>
 
 
-    </body>
+</body>
+
 </html>
