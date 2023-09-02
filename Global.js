@@ -1,4 +1,4 @@
-import { BlackjackTypes } from "./Constants.js"
+import { BlackjackTypes, GameResult } from "./Constants.js"
 
 export class Global{
     constructor(money){
@@ -16,7 +16,7 @@ export class Global{
     handleBlackJack(blackjackState, bet){
         switch(blackjackState){
             case BlackjackTypes.player:
-                this.winSum(Math.round(bet*1.5))
+                this.winSum(Math.round(bet*2.5))
                 break
             case BlackjackTypes.both:
                 this.winSum(bet)
@@ -24,5 +24,20 @@ export class Global{
             default:
         }
         return this.money
+    }
+
+    endGame(gameResult, bet){
+        switch (gameResult){
+            case GameResult.draw:
+                this.winSum(bet)
+                break
+            case GameResult.win:
+                this.winSum(bet*2)
+                break
+            case GameResult.loss:
+                break
+            default:
+        }
+        return this.money    
     }
 }

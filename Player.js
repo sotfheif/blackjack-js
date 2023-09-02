@@ -10,6 +10,8 @@ export class Player {
         return new this(isDealer, Hand.build([]))
     }
     drawCard(deck) {
+        console.log("typeof deck = " + typeof deck)
+        console.log("deck card count = "+deck.cards.length)
         this.hand.addCard(deck.giveCard())
     }
     drawFirstCards(deck) {
@@ -24,5 +26,9 @@ export class Player {
         if (this.hand.getSize() === 2 && this.hand.getWorth() === 21) {
             return true
         } else { return false }
+    }
+
+    getHandWorth() {
+        return this.hand.getWorth()
     }
 }

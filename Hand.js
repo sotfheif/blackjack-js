@@ -1,4 +1,5 @@
 import { MAX_SCORE } from "./Constants.js"
+import { Card } from "./Card.js"
 
 export class Hand {
     constructor(cards){
@@ -12,22 +13,9 @@ export class Hand {
     /* mb use worth property and calcWorth() method which updates
     property value instead
     */
-    getWorth() { 
-        const ranks = this.cards.map(card => card.rank)
-        let score = 0
-        let aceCount = 0
-        for (const rank of ranks) {
-            if (rank === 1) { aceCount++ }
-            if (rank === 11 || rank === 12 || rank == 13){
-                score += 10
-            } else {
-                score += rank
-            }
-        }
-        while ((score <= MAX_SCORE - 10) && (aceCount-- > 0)) {
-            score += 10
-        }
-        return score
+    getWorth(include1stCard = true) { 
+        return include1stCard ? Card.getCardsWorth(this.cards)
+        : Card.getCardsWorth(this.cards.slice(1))
     }
     
     getSize() {

@@ -8,8 +8,14 @@ html, body {
     position:relative;
 }
 .game {
-    visibility: hidden;
+    visibility: visible /*hidden*/;
 }
+
+.gameover {
+    visibility: visible;
+}
+
+
 body{
     background-color: transparent;
 }
@@ -54,7 +60,10 @@ html {
     
     margin: auto;
     */
-    
+}
+
+#player-worth-text {
+    visibility: visible;
 }
 
 #bet-play-gameover-ul {
@@ -69,6 +78,7 @@ html {
     white-space: nowrap;
     display: flex;
     align-items: center;
+    border: 2px solid black;
 }
 
 #player-zone{
@@ -76,12 +86,14 @@ html {
 }
 
 #dealer-worth-text, #player-worth-text {
-    display: inline;
-    margin: 0px;
+    width: 30px;
+    border: 2px solid blue;
+    text-align: right;
 }
 
 #dealer-cards, #player-cards {
-    display: inline;
+    height: 142px;
+    border: 2px solid red;
 }
 
 
@@ -113,11 +125,15 @@ html {
 }
 */
 
+#gameover-message {
+    border: 2px solid black;
+    height:20px;
+}
 
 #play-btns {
     margin-left:600px;
 }
 
 #test-btn {
-    visibility: hidden;
+    visibility: visible;
 }

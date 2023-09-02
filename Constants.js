@@ -53,7 +53,18 @@ export const Ranks = Object.freeze({
     [Ranks.queen, "queen"],
     [Ranks.king, "king"]
   ])
+
+  export const PlayerType = Object.freeze({
+    dealer:"dealer",
+    player:"player",
+  })
+
+  export const GameResult = Object.freeze({
+    draw: 0,
+    win: 1,
+    loss: 2
+  })
   
-  export const MAX_SCORE = 21
+export const MAX_SCORE = 21
 export const CARD_DRAW_DURATION_MS = 1200
   

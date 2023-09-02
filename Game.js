@@ -1,10 +1,10 @@
 import {Player} from "./Player.js"
 import {Deck} from "./Deck.js"
-import {BlackjackTypes} from "./Constants.js"
+import {BlackjackTypes, GameResult} from "./Constants.js"
 
 export class Game{
     constructor(rules) {
-        rules = this.rules
+        this.rules = rules
     }
     player
     dealer
@@ -41,14 +41,35 @@ export class Game{
         return blackjack
     }
     drawPlayerCard(){
-        this.player.drawCard(deck)
+        this.player.drawCard(this.deck)
     }
 
     drawDealerCard(){
-        this.dealer.drawCard(deck)
+        this.dealer.drawCard(this.deck)
     }
 
-    gameOver(){
+    dealerMove() {
+        controller.showDealerHiddenCard(this.dealer.hand.cards[0])
+        while(this.dealer.getHandWorth()<17) {
+          this.dealer.drawCard()
+        }
+    }
 
+    getResult(){
+        if (this.player.getHandWorth()>21) {
+            return {result: GameResult.loss, mess: "Bust, dealer wins!"}
+        } else if (this.dealer.getHandWorth()>21) {
+            //dealer overdraft, player win
+            return {result: GameResult.win, mess: "Dealer busts, you win!"}
+        } else if (this.dealer.getHandWorth()>this.player.getHandWorth()) {
+            //dealer more worth, dealer win
+            return {result: GameResult.loss, mess: "Dealer wins!"}
+        } else if (this.dealer.getHandWorth()<this.player.getHandWorth()) {
+            //player more worth, player win
+            return {result: GameResult.win, mess:"You win!"}
+        } else {// even score
+            return {result: GameResult.draw, mess: "Push"}
+            //draw, nobody win
+        }
     }
 }
