@@ -78,7 +78,7 @@ html {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    border: 2px solid black;
+    /*border: 2px solid black;*/
 }
 
 #player-zone{
@@ -87,15 +87,20 @@ html {
 
 #dealer-worth-text, #player-worth-text {
     width: 30px;
-    border: 2px solid blue;
+    /*border: 2px solid blue;*/
+    padding-right : 5px;
     text-align: right;
 }
 
 #dealer-cards, #player-cards {
     height: 142px;
-    border: 2px solid red;
+    /*border: 2px solid red;*/
 }
 
+
+#balance-bet{
+    width: 120px
+}
 
 #balance-bet-deck{
     margin-top:-80px;
@@ -126,7 +131,7 @@ html {
 */
 
 #gameover-message {
-    border: 2px solid black;
+    /*border: 2px solid black;*/
     height:20px;
 }
 
@@ -136,4 +141,20 @@ html {
 
 #test-btn {
     visibility: visible;
+}
+
+
+#rules {
+    position: absolute;
+    margin-left: 600px; 
+    margin-top: 20px;
+}
+
+#blackjack-pay{
+    width:220px;
+}
+
+#soft17 {
+    width: 220px;
+    margin-top: 5px;
 }

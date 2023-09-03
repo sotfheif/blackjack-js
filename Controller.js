@@ -137,13 +137,6 @@ return anim
     )
   }
 
-
-    test(){
-    //getBoundingClientRect().top
-  //getBoundingClientRect().left
-  //translate("100px", "50px")
-  }
-
   addCardBackOnDeck(id =""){
     let deckPlace = this.getDeckPlacePx()
     console.log("addCardBackOnDeck left " + deckPlace.left +" top " + deckPlace.top)
@@ -193,6 +186,13 @@ return anim
   }
   //el.addEventListener("animationend", function() {})
 
+  playerHit(cards){
+    const i = cards.length-1
+    const prom = this.drawPlayerCard(cards[i], i, PlayerType.player)
+          .then(() => this.updateHandWorth(PlayerType.player, 
+            Card.getCardsWorth(cards.slice(0,i+1))))
+    return prom
+  }
 
   drawPlayerCard(card, prevCardCount, playerType, hidden = false){
     console.log("drawPlayerCard "+card.suit + " " + card.rank)
@@ -232,6 +232,18 @@ return anim
 
   }
 
+  cleanUpUiOnGameStart() {
+    console.log("cleanUpGameUi()")
+    document.getElementById("gameover-message").textContent = ""
+    document.getElementById("player-worth-text").textContent = ""
+    document.getElementById("dealer-worth-text").textContent = ""
+  }
+
+  cleanUpUiOnGameEnd() {
+    this.hideElementsByClass("game")
+    document.getElementById("bet-text").textContent = ""
+  }
+
   showBet(bet) {
     const betEl = document.getElementById("bet-text")
     betEl.textContent = "Bet: " + bet
@@ -253,6 +265,7 @@ return anim
     console.log("playerhand = "+playerHand.cards[0].rank +" "+playerHand.cards[0].suit+', ' + playerHand.cards[1].rank+' '+playerHand.cards[1].suit)
     console.log("dealerhand = "+dealerHand.cards[0].rank +" "+dealerHand.cards[0].suit+', ' + dealerHand.cards[1].rank+' '+dealerHand.cards[1].suit)
     this.hideBetDialog()
+    this.revealElementsByClass("game")
     this.updateBalance(balance)
     this.showBet(bet)
     document.getElementById(this.deckImgId).style.visibility = "visible" //deck image
@@ -271,8 +284,12 @@ return anim
     dealerWorthEl.textContent = dealerHandWorth
   }
 
-  hideBetDialog(){
-    document.getElementById("bet-play-gameover").style.visibility = "hidden"
+  hideBetDialog() {
+    this.hideElementsByClass("gameover")
+  }
+
+  showBetDialog() {
+    this.revealElementsByClass("gameover")
   }
 
   givePlayerStartHand(playerHand){
@@ -333,8 +350,7 @@ return anim
         break
       default:
     }
-    this.updateShowUiText(this.gameoverMessId, mess)
-    this.updateBalance(newBalance)
+    this.endGame(mess, newBalance)
   }
 
   showDealerHiddenCard(card, handWorth){
@@ -343,17 +359,39 @@ return anim
   }
 
   endGame(mess, newBalance){
+    console.log("controller.endGame()")
     this.updateBalance(newBalance)
-    document.getElementById("bet-text").textContent = ""
     document.getElementById("gameover-message")
     .textContent = mess
-    document.getElementById("bet-play-gameover")
-    .style.visibility = "visible"
-    document.getElementsByClassName("game")
-  }
+    this.showBetDialog()
+    this.cleanUpUiOnGameEnd()
+    }
 
   updateHandWorth(playerType, handWorth) {
     let id = `${playerType}-worth-text`
     document.getElementById(id).textContent = handWorth
+  }
+
+  removeElementsByClass(className){
+    const elements = document.getElementsByClassName(className);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+  }
+
+  hideElementsByClass(className){
+    const elements = document.getElementsByClassName(className);
+    let i = -1
+    while(++i<elements.length){
+        elements[i].style.visibility = "hidden";
+    }
+  }
+
+  revealElementsByClass(className){
+    const elements = document.getElementsByClassName(className);
+    let i = -1
+    while(++i<elements.length){
+        elements[i].style.visibility = "visible";
+    }
   }
 }

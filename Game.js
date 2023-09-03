@@ -22,7 +22,7 @@ export class Game{
         this.player.drawFirstCards(this.deck)
         this.dealer.drawFirstCards(this.deck)
     }
-    
+
     checkBlackjack(){
         const playerBlackjack = this.player.hasBlackjack()
         const dealerBlackjack = this.dealer.hasBlackjack()
@@ -41,11 +41,11 @@ export class Game{
         return blackjack
     }
     drawPlayerCard(){
-        this.player.drawCard(this.deck)
+        return this.player.drawCard(this.deck)
     }
 
     drawDealerCard(){
-        this.dealer.drawCard(this.deck)
+        return this.dealer.drawCard(this.deck)
     }
 
     dealerMove() {

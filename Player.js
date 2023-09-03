@@ -12,7 +12,7 @@ export class Player {
     drawCard(deck) {
         console.log("typeof deck = " + typeof deck)
         console.log("deck card count = "+deck.cards.length)
-        this.hand.addCard(deck.giveCard())
+        return this.hand.addCard(deck.giveCard())
     }
     drawFirstCards(deck) {
         this.drawCard(deck)

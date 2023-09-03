@@ -35,12 +35,9 @@ standBtn.addEventListener("click", playerStand)
 
 
 function startGame() {
-  document.getElementById("gameover-message").textContent = ""
+  controller.cleanUpUiOnGameStart()
   console.log("clas  len" + document.getElementsByClassName("removable").length)
-  removeElementsByClass("removable")
-  document.getElementById("player-worth-text").textContent = ""
-  document.getElementById("dealer-worth-text").textContent = ""
-
+  controller.removeElementsByClass("removable")
   let betText = betInput.value //assert or make sure it's number
   let bet = parseInt(betText) 
   console.log('betText=' + betText + ' bet='+bet)
@@ -62,8 +59,15 @@ function handleBlackJack(balance) {
 }
 */
 
-function playerHit(){
-drawPlayerCard()
+function playerHit() {
+  console.log("playerHit()")
+  let cards = drawPlayerCard()
+  controller.playerHit(cards).then(() =>
+  {
+    console.log("player.getHandWorth() ="+game.player.getHandWorth)
+    if (game.player.getHandWorth() > 21) {
+    endGame()
+  }}) 
 }
 
 function playerStand(){
@@ -71,7 +75,7 @@ function playerStand(){
 }
 
 function drawPlayerCard(){
-  game.drawPlayerCard()
+  return game.drawPlayerCard()
 }
 
 function dealerMove(dealer) {
@@ -96,20 +100,10 @@ function playerWin(global, bet) {
   global.win(bet)
 }
 
+/*
 document.getElementById("test-btn").addEventListener("click", test)
-function test() {
-  console.log("clas  len" + document.getElementsByClassName("removable").length)
-  removeElementsByClass("removable")
-}
-
-
-function removeElementsByClass(className){
-    const elements = document.getElementsByClassName(className);
-    while(elements.length > 0){
-        elements[0].parentNode.removeChild(elements[0]);
-    }
-}
-
+function test() {}
+*/
 
 
 function drawGameUi(){
