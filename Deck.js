@@ -1,13 +1,13 @@
-import {Card} from "./Card.js"
-import {Suits, Ranks} from "./Constants.js"
-import {shuffled} from "./Utils.js"
+import { Card } from "./Card.js"
+import { Suits, Ranks } from "./Constants.js"
+import { shuffled } from "./Utils.js"
 
-export class Deck{
-    constructor(cards){
+export class Deck {
+    constructor(cards) {
         this.cards = cards
     }
     cards
-    static build(){
+    static build() {
         let cards = []
         for (const suit of Object.values(Suits)) {
             for (const rank of Object.values(Ranks)) {
@@ -16,7 +16,7 @@ export class Deck{
         }
         return new this(shuffled(cards))
     }
-    giveCard(){
+    giveCard() {
         return this.cards.shift()
     }
 }

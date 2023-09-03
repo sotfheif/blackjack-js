@@ -1,5 +1,4 @@
 import { Hand } from "./Hand.js"
-import { Deck } from "./Deck.js"
 
 export class Player {
     constructor(isDealer, hand) {
@@ -11,15 +10,12 @@ export class Player {
     }
     drawCard(deck) {
         console.log("typeof deck = " + typeof deck)
-        console.log("deck card count = "+deck.cards.length)
+        console.log("deck card count = " + deck.cards.length)
         return this.hand.addCard(deck.giveCard())
     }
     drawFirstCards(deck) {
         this.drawCard(deck)
         this.drawCard(deck)
-    }
-
-    stand(){
     }
 
     hasBlackjack() {

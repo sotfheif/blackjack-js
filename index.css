@@ -1,22 +1,18 @@
 .card {
-    width: 100px; /*if width = 100px then height = 142px*/
-   
+    width: 100px;
+    /*if width = 100px then height = 142px*/
+
 }
-html, body {
+
+html,
+body {
     margin: 0;
     padding: 0;
-    position:relative;
-}
-.game {
-    visibility: visible /*hidden*/;
-}
-
-.gameover {
-    visibility: visible;
+    position: relative;
 }
 
 
-body{
+body {
     background-color: transparent;
 }
 
@@ -38,33 +34,21 @@ html {
     display: flex;
 }
 
-#bet-input{
+#bet-input {
     width: 70px;
 }
 
 #bet-play-gameover {
-    
+
     margin: 0;
-    
-    width:100%;
+
+    width: 100%;
     display: flex;
     text-align: center;
-    align-items:center;
+    align-items: center;
     justify-content: center;
-    /*
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
-    */
 }
 
-#player-worth-text {
-    visibility: visible;
-}
 
 #bet-play-gameover-ul {
     list-style: none;
@@ -72,7 +56,8 @@ html {
     padding: 0;
 }
 
-#dealer-zone, #player-zone {
+#dealer-zone,
+#player-zone {
     margin-left: 100px;
     height: 142px;
     white-space: nowrap;
@@ -81,29 +66,31 @@ html {
     /*border: 2px solid black;*/
 }
 
-#player-zone{
+#player-zone {
     margin-top: -40px
 }
 
-#dealer-worth-text, #player-worth-text {
+#dealer-worth-text,
+#player-worth-text {
     width: 30px;
     /*border: 2px solid blue;*/
-    padding-right : 5px;
+    padding-right: 5px;
     text-align: right;
 }
 
-#dealer-cards, #player-cards {
+#dealer-cards,
+#player-cards {
     height: 142px;
     /*border: 2px solid red;*/
 }
 
 
-#balance-bet{
+#balance-bet {
     width: 120px
 }
 
-#balance-bet-deck{
-    margin-top:-80px;
+#balance-bet-deck {
+    margin-top: -80px;
     margin-left: 10px;
     height: 142px;
     gap: 600px;
@@ -112,46 +99,34 @@ html {
 }
 
 
-#balance-bet{
+#balance-bet {
     margin-top: 50px;
-    /*
-    display: inline-block;
-    */
 }
-/*
-#deck {
-    display: inline-block;
-    margin-left: 600px;
-}
-*/
-/*
-#balance-text{
-
-}
-*/
 
 #gameover-message {
     /*border: 2px solid black;*/
-    height:20px;
+    height: 20px;
 }
 
 #play-btns {
-    margin-left:600px;
+    margin-left: 600px;
 }
 
+/*
 #test-btn {
     visibility: visible;
 }
+*/
 
 
 #rules {
     position: absolute;
-    margin-left: 600px; 
+    margin-left: 600px;
     margin-top: 20px;
 }
 
-#blackjack-pay{
-    width:220px;
+#blackjack-pay {
+    width: 220px;
 }
 
 #soft17 {

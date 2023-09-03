@@ -1,164 +1,138 @@
-import {Card} from "./Card.js"
-import {Suits, Ranks, suitFileName, rankFileName, CARD_DRAW_DURATION_MS, BlackjackTypes, PlayerType} from "./Constants.js"
-import { Player } from "./Player.js"
+import { Card } from "./Card.js"
+import { suitFileName, rankFileName, CARD_DRAW_DURATION_MS, BlackjackTypes, PlayerType } from "./Constants.js"
 export class Controller {
-    constructor(){
+  constructor() {
 
-    }
-    neighbourCardOffsetPx = 30
-    cardWidthPx = 100
-    dealerCardPlacePx = {left: 100, top: 20}
-    playerCardPlacePx = {left: 100, top: 200}
-    deckPlacePx = {left:800, top:110}
-    deckImgId = "deck-img"
-    balanceTextId = "balance-text"
-    gameoverMessId = "gameover-message"
+  }
+  neighbourCardOffsetPx = 30
+  cardWidthPx = 100
+  dealerCardPlacePx = { left: 100, top: 20 }
+  playerCardPlacePx = { left: 100, top: 200 }
+  deckPlacePx = { left: 800, top: 110 }
+  deckImgId = "deck-img"
+  balanceTextId = "balance-text"
+  gameoverMessId = "gameover-message"
 
-    getDealerCardPlacePx() {
-      let elRect = document.getElementById("dealer-cards").getBoundingClientRect()
-      let left = elRect.left
-      let top = elRect.top
-      console.log("getdealerplc left =" + left+", top =" + top)
+  getDealerCardPlacePx() {
+    let elRect = document.getElementById("dealer-cards").getBoundingClientRect()
+    let left = elRect.left
+    let top = elRect.top
+    console.log("getdealerplc left =" + left + ", top =" + top)
 
-      return {left: left, top: top}
-    }
-    getPlayerCardPlacePx() {
-      let elRect = document.getElementById("player-cards").getBoundingClientRect()
-      let left = elRect.left
-      let top = elRect.top
-      console.log("getplayerplc left =" + left+", top =" + top)
-      return {left: left, top: top}
-    }
-    getDeckPlacePx(){
-      let elRect = document.getElementById("deck-img").getBoundingClientRect()
-      let left = elRect.left
-      let top = elRect.top
-      return {left: left, top: top}
-    }
+    return { left: left, top: top }
+  }
+  getPlayerCardPlacePx() {
+    let elRect = document.getElementById("player-cards").getBoundingClientRect()
+    let left = elRect.left
+    let top = elRect.top
+    console.log("getplayerplc left =" + left + ", top =" + top)
+    return { left: left, top: top }
+  }
+  getDeckPlacePx() {
+    let elRect = document.getElementById("deck-img").getBoundingClientRect()
+    let left = elRect.left
+    let top = elRect.top
+    return { left: left, top: top }
+  }
 
-    build(){
-        return new this()
-    }
+  build() {
+    return new this()
+  }
 
 
-  move(source, left, top, fill='forwards') {
-      console.log("source.style.left= " + parseInt(source.style.left) +", source.style.top=" + parseInt(source.style.top))
+  move(source, left, top, fill = 'forwards') {
+    console.log("source.style.left= " + parseInt(source.style.left) + ", source.style.top=" + parseInt(source.style.top))
 
-      const x = left - parseInt(source.style.left)
-      const y = top - parseInt(source.style.top)
+    const x = left - parseInt(source.style.left)
+    const y = top - parseInt(source.style.top)
 
-      const keyFrames =
+    const keyFrames =
       [
-          { transform: 'translate(0)' }, 
-          { transform: `translate(${x}px, ${y}px)` }
+        { transform: 'translate(0)' },
+        { transform: `translate(${x}px, ${y}px)` }
       ]
 
-      let anim = source.animate(keyFrames, {
-        duration: CARD_DRAW_DURATION_MS,
-        fill: fill,
-        easing: "ease-in-out",
-      })
-      return anim.finished
+    let anim = source.animate(keyFrames, {
+      duration: CARD_DRAW_DURATION_MS,
+      fill: fill,
+      easing: "ease-in-out",
+    })
+    return anim.finished
   }
 
-    //pass fill = 'none' to return to orig place after animation
-  moveAndTurnOver(source, left, top, fill='forwards', card) {
+  //pass fill = 'none' to return to orig place after animation
+  moveAndTurnOver(source, left, top, fill = 'forwards', card) {
     return this.move(source, left, top, fill).then(
       this.setCardImgSrc.bind(this, source, card))
-        
-
-        /*
-        const anim = new Animation(
-    new KeyframeEffect(source, keyFrames, 
-      {
-        duration: CARD_DRAW_DURATION_MS,
-        fill: fill,
-        easing: "ease-in-out",
-      })
-)
-anim.onfinish = () => 
-{this.setCardImgSrc.bind(this, source, card)}
-anim.play()
-return anim
-/*
-        let anim = source.animate(keyFrames, {
-            duration: CARD_DRAW_DURATION_MS,
-            fill: fill,
-            easing: "ease-in-out",
-          })//.finished.then(this.setCardImgSrc.bind(this, source, card))
-          // or use //anim.onfinish = () => {console.log("animend")}
-          //finished.then(e => { e.effect.target.style.transform = 'rotate(90deg)'; })
-          //this.setCardImgSrc.bind(null, source, card)
-          */
   }
 
-  moveAndTurnOverCards(sourceAr, leftAr, topAr, fillAr, cardAr){
-      let animAr =  prepareMoveAndTurnOverCardsAnimAr(sourceAr, leftAr, topAr, fillAr, cardAr)
-      this.chainAnimations(animAr)
-    }
+  moveAndTurnOverCards(sourceAr, leftAr, topAr, fillAr, cardAr) {
+    let animAr = prepareMoveAndTurnOverCardsAnimAr(sourceAr, leftAr, topAr, fillAr, cardAr)
+    this.chainAnimations(animAr)
+  }
 
   prepareMoveAndTurnOverCardsAnimAr(sourceAr, leftAr, topAr, fillAr, cardAr) {
-      let animAr = []
-      let i = 0
-      while (i<sourceAr.length) {
-        const x = leftAr[i] - parseInt(sourceAr[i].style.left)
-        const y = topAr[i] - parseInt(sourceAr[i].style.top)
-        console.log(`x=${x}, y=${y}`)
-        const keyFrames =
+    let animAr = []
+    let i = 0
+    while (i < sourceAr.length) {
+      const x = leftAr[i] - parseInt(sourceAr[i].style.left)
+      const y = topAr[i] - parseInt(sourceAr[i].style.top)
+      console.log(`x=${x}, y=${y}`)
+      const keyFrames =
         [
-            { transform: 'translate(0)' }, 
-            { transform: `translate(${x}px, ${y}px)` }
+          { transform: 'translate(0)' },
+          { transform: `translate(${x}px, ${y}px)` }
         ]
 
-        const anim = new Animation(
-    new KeyframeEffect(sourceAr[i], keyFrames, 
-      {
-        duration: CARD_DRAW_DURATION_MS,
-        fill: fillAr[i],
-        easing: "ease-in-out",
-      }))
+      const anim = new Animation(
+        new KeyframeEffect(sourceAr[i], keyFrames,
+          {
+            duration: CARD_DRAW_DURATION_MS,
+            fill: fillAr[i],
+            easing: "ease-in-out",
+          }))
       anim.onfinish = this.setCardImgSrc.bind(this, sourceAr[i], cardAr[i])
       animAr.push(moveAnim)
       i++
     }
-    console.log("animAr = "+animAr)
+    console.log("animAr = " + animAr)
     return animAr
   }
 
   chainAnimations(animations) {
-      const s = animations.reduce((accumulator, currentValue) => {
-        return accumulator.then(() => {
-            currentValue.play()
-            return currentValue.finished
-        })
+    const s = animations.reduce((accumulator, currentValue) => {
+      return accumulator.then(() => {
+        currentValue.play()
+        return currentValue.finished
+      })
     }, Promise.resolve()).then(
-        () => console.log('chainanims done'),
-        (e) => {console.log("e="+e)}
+      () => console.log('chainanims done'),
+      (e) => { console.log("e=" + e) }
     )
   }
 
-  addCardBackOnDeck(id =""){
+  addCardBackOnDeck(id = "") {
     let deckPlace = this.getDeckPlacePx()
-    console.log("addCardBackOnDeck left " + deckPlace.left +" top " + deckPlace.top)
+    console.log("addCardBackOnDeck left " + deckPlace.left + " top " + deckPlace.top)
     const cardBackImg = this.createCardBack()
     cardBackImg.style.left = deckPlace.left
     cardBackImg.style.top = deckPlace.top
-    if (id!=""){cardBackImg.setAttribute("id", id)}
+    if (id != "") { cardBackImg.setAttribute("id", id) }
     document.body.append(cardBackImg)
     return document.getElementById(id)
   }
 
-  addCardFrontImg(card, left, top){
+  addCardFrontImg(card, left, top) {
     let cardFrontImg = this.createCardFront(card)
   }
 
-  createCardBack(){
+  createCardBack() {
     const cardBackImg = this.createCardImg()
     cardBackImg.src = "./res/card_images/svg/back.svg"
     return cardBackImg
   }
 
-  createCardImg(){
+  createCardImg() {
     const img = document.createElement("img")
     img.style.position = "absolute"
     img.setAttribute("class", "card removable")
@@ -172,61 +146,59 @@ return anim
   }
 
   getCardImgPath(card) {
-    console.log("getCardImgPath "+card.suit + " " + card.rank)
-    console.log("getCardImgPath "+ suitFileName.get(card.suit) + " " + rankFileName.get(card.rank))
+    console.log("getCardImgPath " + card.suit + " " + card.rank)
+    console.log("getCardImgPath " + suitFileName.get(card.suit) + " " + rankFileName.get(card.rank))
 
     return `./res/card_images/svg/${suitFileName.get(card.suit)}_${rankFileName.get(card.rank)}.svg`
   }
 
 
 
-  setCardImgSrc(el, card){
-    console.log("setCardImgSrc "+card.suit + " " + card.rank)
+  setCardImgSrc(el, card) {
+    console.log("setCardImgSrc " + card.suit + " " + card.rank)
     el.setAttribute("src", this.getCardImgPath(card))
   }
-  //el.addEventListener("animationend", function() {})
 
-  playerHit(cards){
-    const i = cards.length-1
+  playerHit(cards) {
+    const i = cards.length - 1
     const prom = this.drawPlayerCard(cards[i], i, PlayerType.player)
-          .then(() => this.updateHandWorth(PlayerType.player, 
-            Card.getCardsWorth(cards.slice(0,i+1))))
+      .then(() => this.updateHandWorth(PlayerType.player,
+        Card.getCardsWorth(cards.slice(0, i + 1))))
     return prom
   }
 
-  drawPlayerCard(card, prevCardCount, playerType, hidden = false){
-    console.log("drawPlayerCard "+card.suit + " " + card.rank)
+  drawPlayerCard(card, prevCardCount, playerType, hidden = false) {
+    console.log("drawPlayerCard " + card.suit + " " + card.rank)
     let cardImgId = `${playerType}-card${prevCardCount}`
     let playerCardPlace
-    if (playerType === PlayerType.player){
-     playerCardPlace = this.getPlayerCardPlacePx()
-    } else if(playerType === PlayerType.dealer) {
+    if (playerType === PlayerType.player) {
+      playerCardPlace = this.getPlayerCardPlacePx()
+    } else if (playerType === PlayerType.dealer) {
       playerCardPlace = this.getDealerCardPlacePx()
     }
     let leftC = playerCardPlace.left + prevCardCount *
-     this.neighbourCardOffsetPx
+      this.neighbourCardOffsetPx
     let topC = playerCardPlace.top
     let el = this.addCardBackOnDeck(cardImgId)
-    //this.setCardImgSrc.bind(null, el, card))
     if (hidden) {
       return this.move(el, leftC, topC, "forwards")
     } else {
-    return this.moveAndTurnOver(el, leftC, topC, "forwards", card)
+      return this.moveAndTurnOver(el, leftC, topC, "forwards", card)
     }
   }
 
-  t2(){console.log("animend")}
+  t2() { console.log("animend") }
 
-  buildSetCardImgSrc(el, card){
+  buildSetCardImgSrc(el, card) {
     return this.setCardImgSrc(el, card)
   }
 
-  drawDealerCard(card){
+  drawDealerCard(card) {
 
   }
 
 
-  showBettingScreen(){
+  showBettingScreen() {
     this.clearGameUi()
     this.showBetDialog()
 
@@ -247,36 +219,34 @@ return anim
   showBet(bet) {
     const betEl = document.getElementById("bet-text")
     betEl.textContent = "Bet: " + bet
-    betEl.style.visibility="visible"
+    betEl.style.visibility = "visible"
   }
 
-  updateShowUiText(elemId, text){
+  updateShowUiText(elemId, text) {
     const elem = document.getElementById(elemId)
     elem.textContent = text
     elem.style.visibility = "visible"
   }
 
-  updateBalance(balance){
-     const text = "Balance: "+ balance
-     this.updateShowUiText(this.balanceTextId,text) 
-    }
+  updateBalance(balance) {
+    const text = "Balance: " + balance
+    this.updateShowUiText(this.balanceTextId, text)
+  }
 
-  startGame(balance, bet, playerHand, dealerHand, blackjackState, newBalance){  
-    console.log("playerhand = "+playerHand.cards[0].rank +" "+playerHand.cards[0].suit+', ' + playerHand.cards[1].rank+' '+playerHand.cards[1].suit)
-    console.log("dealerhand = "+dealerHand.cards[0].rank +" "+dealerHand.cards[0].suit+', ' + dealerHand.cards[1].rank+' '+dealerHand.cards[1].suit)
+  startGame(balance, bet, playerHand, dealerHand, blackjackState, newBalance) {
+    console.log("playerhand = " + playerHand.cards[0].rank + " " + playerHand.cards[0].suit + ', ' + playerHand.cards[1].rank + ' ' + playerHand.cards[1].suit)
+    console.log("dealerhand = " + dealerHand.cards[0].rank + " " + dealerHand.cards[0].suit + ', ' + dealerHand.cards[1].rank + ' ' + dealerHand.cards[1].suit)
     this.hideBetDialog()
     this.revealElementsByClass("game")
     this.updateBalance(balance)
     this.showBet(bet)
     document.getElementById(this.deckImgId).style.visibility = "visible" //deck image
-    //this.addCardBackOnDeck(this.topDeckImgId)//img to move around
-    this.givePlayerStartHand(playerHand).then(()=> 
-    {return this.giveDealerStartHand(dealerHand)}).then(() =>
-    this.showHandWorth(playerHand.getWorth(), dealerHand.getWorth(false))
+    this.givePlayerStartHand(playerHand).then(() => { return this.giveDealerStartHand(dealerHand) }).then(() =>
+      this.showHandWorth(playerHand.getWorth(), dealerHand.getWorth(false))
     ).then(() => this.handleBlackJack(blackjackState, newBalance, dealerHand.cards[0], dealerHand.getWorth()))
   }
-  
-  showHandWorth(playerHandWorth, dealerHandWorth){
+
+  showHandWorth(playerHandWorth, dealerHandWorth) {
     console.log("showHandWorth()")
     let playerWorthEl = document.getElementById("player-worth-text")
     let dealerWorthEl = document.getElementById("dealer-worth-text")
@@ -292,53 +262,43 @@ return anim
     this.revealElementsByClass("gameover")
   }
 
-  givePlayerStartHand(playerHand){
+  givePlayerStartHand(playerHand) {
     return this.drawPlayerCard(playerHand.cards[0], 0, PlayerType.player)
-    .then(() =>this.drawPlayerCard(playerHand.cards[1], 1, PlayerType.player))
+      .then(() => this.drawPlayerCard(playerHand.cards[1], 1, PlayerType.player))
   }
 
-  giveDealerStartHand(dealerHand){
+  giveDealerStartHand(dealerHand) {
     return this.drawPlayerCard(dealerHand.cards[0], 0, PlayerType.dealer, true)
-    .then(() =>this.drawPlayerCard(dealerHand.cards[1], 1, PlayerType.dealer))
+      .then(() => this.drawPlayerCard(dealerHand.cards[1], 1, PlayerType.dealer))
   }
 
   dealerMove(dealerHand) {
-    /*
-    let animAr = prepareMoveAndTurnOverCardsAnimAr(
-      sourceAr, leftAr, topAr, fillAr, cardAr)
-
-    let i = 2
-    while(i<dealerHand.getSize()){
-      this.drawPlayerCard(dealerHand.cards[i], i, PlayerType.dealer)
-      i++
-    }
-    */
-   const cards = dealerHand.cards
-   let i = 1
+    const cards = dealerHand.cards
+    let i = 1
 
     const s = cards.slice(2).reduce((accumulator, card) => {
       return accumulator.then(() => {
-          i++
-          console.log(`updatehandworth() cards.slice(0,${i}):${cards.slice(0,i+1)
-            .map(card => card.rank)}`)
-          const prom = this.drawPlayerCard(card, i, PlayerType.dealer)
-          .then(() => this.updateHandWorth(PlayerType.dealer, 
-            Card.getCardsWorth(cards.slice(0,i+1))))
+        i++
+        console.log(`updatehandworth() cards.slice(0,${i}):${cards.slice(0, i + 1)
+          .map(card => card.rank)}`)
+        const prom = this.drawPlayerCard(card, i, PlayerType.dealer)
+          .then(() => this.updateHandWorth(PlayerType.dealer,
+            Card.getCardsWorth(cards.slice(0, i + 1))))
 
-          
-          return prom
+
+        return prom
       })
-  }, Promise.resolve())
-  return s
+    }, Promise.resolve())
+    return s
   }
 
 
-  handleBlackJack(blackjackState, newBalance, dealerHiddenCard, dealerHandWorth){
-    if (blackjackState === BlackjackTypes.nobody) {return}
+  handleBlackJack(blackjackState, newBalance, dealerHiddenCard, dealerHandWorth) {
+    if (blackjackState === BlackjackTypes.nobody) { return }
     this.showDealerHiddenCard(dealerHiddenCard, dealerHandWorth)
-    
-    let mess 
-    switch(blackjackState){
+
+    let mess
+    switch (blackjackState) {
       case BlackjackTypes.player:
         mess = "Blackjack! You win"
         break
@@ -353,45 +313,45 @@ return anim
     this.endGame(mess, newBalance)
   }
 
-  showDealerHiddenCard(card, handWorth){
+  showDealerHiddenCard(card, handWorth) {
     document.getElementById("dealer-card0").src = this.getCardImgPath(card)
     this.updateHandWorth(PlayerType.dealer, handWorth)
   }
 
-  endGame(mess, newBalance){
+  endGame(mess, newBalance) {
     console.log("controller.endGame()")
     this.updateBalance(newBalance)
     document.getElementById("gameover-message")
-    .textContent = mess
+      .textContent = mess
     this.showBetDialog()
     this.cleanUpUiOnGameEnd()
-    }
+  }
 
   updateHandWorth(playerType, handWorth) {
     let id = `${playerType}-worth-text`
     document.getElementById(id).textContent = handWorth
   }
 
-  removeElementsByClass(className){
+  removeElementsByClass(className) {
     const elements = document.getElementsByClassName(className);
-    while(elements.length > 0){
-        elements[0].parentNode.removeChild(elements[0]);
+    while (elements.length > 0) {
+      elements[0].parentNode.removeChild(elements[0]);
     }
   }
 
-  hideElementsByClass(className){
+  hideElementsByClass(className) {
     const elements = document.getElementsByClassName(className);
     let i = -1
-    while(++i<elements.length){
-        elements[i].style.visibility = "hidden";
+    while (++i < elements.length) {
+      elements[i].style.visibility = "hidden";
     }
   }
 
-  revealElementsByClass(className){
+  revealElementsByClass(className) {
     const elements = document.getElementsByClassName(className);
     let i = -1
-    while(++i<elements.length){
-        elements[i].style.visibility = "visible";
+    while (++i < elements.length) {
+      elements[i].style.visibility = "visible";
     }
   }
 }

@@ -1,6 +1,6 @@
 export const rules = {
-    deckCount : 1,
-    s17 : true, // dealer must stand soft 17
+    deckCount: 1,
+    s17: true, // dealer must stand soft 17
     //mb add surrender
     //mb add double down
     //mb add insurance

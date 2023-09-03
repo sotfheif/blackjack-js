@@ -1,9 +1,7 @@
-import {Game} from './Game.js'
-import {Global} from './Global.js'
-import {rules} from './Rules.js'
-import {Controller} from './Controller.js'
-import {Card} from './Card.js'
-import { BlackjackTypes } from './Constants.js'
+import { Game } from './Game.js'
+import { Global } from './Global.js'
+import { rules } from './Rules.js'
+import { Controller } from './Controller.js'
 
 console.log("index.js start")
 
@@ -13,7 +11,6 @@ setTimeout(function() {
 }, millisecondsToWait);
 */
 
-let state
 const global = Global.build()
 const controller = new Controller()
 let betInput = document.getElementById("bet-input")
@@ -27,7 +24,7 @@ playBtn.addEventListener("click", startGame)
 let hitBtn = document.getElementById("hit-btn")
 hitBtn.addEventListener("click", playerHit)
 
-let okBtn = document.getElementById("gameover-ok-btn")
+//let okBtn = document.getElementById("gameover-ok-btn")
 
 let standBtn = document.getElementById("stand-btn")
 standBtn.addEventListener("click", playerStand)
@@ -39,9 +36,9 @@ function startGame() {
   console.log("clas  len" + document.getElementsByClassName("removable").length)
   controller.removeElementsByClass("removable")
   let betText = betInput.value //assert or make sure it's number
-  let bet = parseInt(betText) 
-  console.log('betText=' + betText + ' bet='+bet)
-  global.placeBet(bet) 
+  let bet = parseInt(betText)
+  console.log('betText=' + betText + ' bet=' + bet)
+  global.placeBet(bet)
   game.start(bet)
   console.log("game started")
   console.log(game.dealer.hand.getSize() + " " +
@@ -51,53 +48,40 @@ function startGame() {
   const blackjackState = game.checkBlackjack()
   let newBalance = global.handleBlackJack(blackjackState, bet)
   controller.startGame(balance, bet, game.player.hand, game.dealer.hand, blackjackState, newBalance)
-    
-}
 
-/*
-function handleBlackJack(balance) {
 }
-*/
 
 function playerHit() {
   console.log("playerHit()")
   let cards = drawPlayerCard()
-  controller.playerHit(cards).then(() =>
-  {
-    console.log("player.getHandWorth() ="+game.player.getHandWorth)
+  controller.playerHit(cards).then(() => {
+    console.log("player.getHandWorth() =" + game.player.getHandWorth)
     if (game.player.getHandWorth() > 21) {
-    endGame()
-  }}) 
+      endGame()
+    }
+  })
 }
 
-function playerStand(){
+function playerStand() {
   dealerMove(game.dealer).then(() => endGame())
 }
 
-function drawPlayerCard(){
+function drawPlayerCard() {
   return game.drawPlayerCard()
 }
 
 function dealerMove(dealer) {
   controller.showDealerHiddenCard(dealer.hand.cards[0], dealer.getHandWorth())
-  while(dealer.getHandWorth()<17) {
+  while (dealer.getHandWorth() < 17) {
     console.log(`dealer worth ${dealer.getHandWorth()}, need to draw more`)
     dealer.drawCard(game.deck)
   }
   console.log(`dealer worth ${dealer.getHandWorth()}, is enough`)
-  return controller.dealerMove(dealer.hand) 
+  return controller.dealerMove(dealer.hand)
 }
 
 function isGameOver() {
-  
-}
 
-function gameOver() {// mb place this inside listener
-  //clearGameUi
-}
-
-function playerWin(global, bet) {
-  global.win(bet)
 }
 
 /*
@@ -106,17 +90,16 @@ function test() {}
 */
 
 
-function drawGameUi(){
+function drawGameUi() {
   controller.drawGameUi()
 }
 
-function showDealerHiddenCard(){
-}
 
-function endGame(){
-  console.log("index.js endGame game.bet ="+ game.bet)
+
+function endGame() {
+  console.log("index.js endGame game.bet =" + game.bet)
   const res = game.getResult()
   const newBalance = global.endGame(res.result, game.bet)
-  console.log("endGame(), newBalance ="+newBalance)
+  console.log("endGame(), newBalance =" + newBalance)
   controller.endGame(res.mess, newBalance)
 }
