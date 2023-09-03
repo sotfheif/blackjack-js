@@ -296,13 +296,19 @@ return anim
       i++
     }
     */
-   const cards = dealerHand.cards.slice(2)
-    const s = cards.reduce((accumulator, card) => {
-      let i = 2
+   const cards = dealerHand.cards
+   let i = 1
+
+    const s = cards.slice(2).reduce((accumulator, card) => {
       return accumulator.then(() => {
-          const prom = this.drawPlayerCard(card, i, PlayerType.dealer)
-          this.updateHandWorth(PlayerType.dealer, Card.getCardsWorth(cards.slice(0,i)))
           i++
+          console.log(`updatehandworth() cards.slice(0,${i}):${cards.slice(0,i+1)
+            .map(card => card.rank)}`)
+          const prom = this.drawPlayerCard(card, i, PlayerType.dealer)
+          .then(() => this.updateHandWorth(PlayerType.dealer, 
+            Card.getCardsWorth(cards.slice(0,i+1))))
+
+          
           return prom
       })
   }, Promise.resolve())

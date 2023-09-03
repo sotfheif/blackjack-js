@@ -21,8 +21,8 @@ export class Game{
         this.deck = Deck.build()
         this.player.drawFirstCards(this.deck)
         this.dealer.drawFirstCards(this.deck)
-        //this.checkBlackjack()
     }
+    
     checkBlackjack(){
         const playerBlackjack = this.player.hasBlackjack()
         const dealerBlackjack = this.dealer.hasBlackjack()

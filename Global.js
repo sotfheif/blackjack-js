@@ -11,7 +11,7 @@ export class Global{
         this.money -= bet
     }
     winSum(amount){
-        this.money += amount
+        this.money = this.money + amount
     }
     handleBlackJack(blackjackState, bet){
         switch(blackjackState){
@@ -27,6 +27,7 @@ export class Global{
     }
 
     endGame(gameResult, bet){
+       console.log("global.endGame() start this.money =" + this.money +", bet = "+ bet)
         switch (gameResult){
             case GameResult.draw:
                 this.winSum(bet)
@@ -38,6 +39,7 @@ export class Global{
                 break
             default:
         }
+        console.log("global.endGame() before return this.money =" + this.money)
         return this.money    
     }
 }
