@@ -37,6 +37,7 @@ function startGame() {
   controller.removeElementsByClass("removable")
   let betText = betInput.value //assert or make sure it's number
   let bet = parseInt(betText)
+  if (isNaN(bet)) {bet = 0}
   console.log('betText=' + betText + ' bet=' + bet)
   global.placeBet(bet)
   game.start(bet)
