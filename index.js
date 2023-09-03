@@ -36,16 +36,16 @@ standBtn.addEventListener("click", playerStand)
 
 function startGame() {
   document.getElementById("gameover-message").textContent = ""
-  Array.prototype.forEach.call(
-    document.getElementsByClassName("removable"),
-  element => {
-    element.remove()
-  });
+  console.log("clas  len" + document.getElementsByClassName("removable").length)
+  removeElementsByClass("removable")
+  document.getElementById("player-worth-text").textContent = ""
+  document.getElementById("dealer-worth-text").textContent = ""
+
   let betText = betInput.value //assert or make sure it's number
   let bet = parseInt(betText) 
   console.log('betText=' + betText + ' bet='+bet)
   global.placeBet(bet) 
-  game.start()
+  game.start(bet)
   console.log("game started")
   console.log(game.dealer.hand.getSize() + " " +
     game.dealer.hand.getWorth() + " " + game.player.hand.getSize() +
@@ -77,8 +77,10 @@ function drawPlayerCard(){
 function dealerMove(dealer) {
   controller.showDealerHiddenCard(dealer.hand.cards[0], dealer.getHandWorth())
   while(dealer.getHandWorth()<17) {
+    console.log(`dealer worth ${dealer.getHandWorth()}, need to draw more`)
     dealer.drawCard(game.deck)
   }
+  console.log(`dealer worth ${dealer.getHandWorth()}, is enough`)
   return controller.dealerMove(dealer.hand) 
 }
 
@@ -96,8 +98,19 @@ function playerWin(global, bet) {
 
 document.getElementById("test-btn").addEventListener("click", test)
 function test() {
-  controller.hideBetDialog()
+  console.log("clas  len" + document.getElementsByClassName("removable").length)
+  removeElementsByClass("removable")
 }
+
+
+function removeElementsByClass(className){
+    const elements = document.getElementsByClassName(className);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+}
+
+
 
 function drawGameUi(){
   controller.drawGameUi()
@@ -107,8 +120,9 @@ function showDealerHiddenCard(){
 }
 
 function endGame(){
-  console.log("endGame()")
+  console.log("index.js endGame game.bet ="+ game.bet)
   const res = game.getResult()
   const newBalance = global.endGame(res.result, game.bet)
+  console.log("endGame(), newBalance ="+newBalance)
   controller.endGame(res.mess, newBalance)
 }
